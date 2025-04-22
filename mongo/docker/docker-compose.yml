@@ -1,0 +1,53 @@
+services:
+  mongo:
+    image: mongo:latest
+    expose:
+      - 27017
+    hostname: mongo
+    ports:
+      - 27017:27017 
+    deploy:
+      mode: replicated
+      replicas: 1
+    restart: always
+    command: mongod --replSet rs0 --dbpath /app/data --bind_ip_all
+    volumes:
+      - ./.data/mongo:/app/data
+  mongoinit:
+    image: mongo
+    # this container will exit after executing the command
+    restart: "no"
+    depends_on:
+      - mongo
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 30
+        mongo --host mongo:27017 --eval 'rs.initiate();'
+  redis:
+    image: redis:${REDIS_TAG:-latest}
+    expose:
+      - 6379
+    ports:
+      - 6379:6379
+    deploy:
+      mode: replicated
+      replicas: ${REDIS_REPLICAS:-0}
+    restart: always
+
+  postgres:
+    image: postgres:${POSTGRES_TAG:-11.17-alpine}
+    expose:
+      - 5432
+    ports:
+      - 5432:5432 
+    deploy:
+      mode: replicated
+      replicas: ${POSTGRES_REPLICAS:-0}
+    restart: always
+    volumes:
+      - ${POSTGRES_DBPATH:-../.data/postgres/data}:/var/lib/postgresql/data
+      - ${POSTGRES_BACKUPPATH:-../.data/postgres/backup}:/var/lib/postgresql/backup
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
