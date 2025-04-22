@@ -13,7 +13,9 @@ mongoose.connect("mongodb://localhost:27017/taskdb", {
 // Define Task Schema & Model
 const taskSchema = new mongoose.Schema({
     task: String,
-    status: String
+    status: String,
+	priority: String,
+	dueDate: String
 });
 const Task = mongoose.model("Task", taskSchema);
 
