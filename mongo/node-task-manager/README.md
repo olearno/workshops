@@ -1,7 +1,7 @@
 1. Start Your MongoDB Server
 2. Start Your Node.js Server
 
-Open a terminal in `../mongo/task-manager/",
+Open a terminal in `../mongo/node-task-manager/",
 
 ```
 node server.js
