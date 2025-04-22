@@ -1,5 +1,9 @@
 # MongoDB Installation Guide for Windows
 
+## Youtube video
+
+For a step-by-step video guide, check out this YouTube link: [How to install MongoDB 7 on Windows 11](https://www.youtube.com/watch?v=1LiZRYzgM2o)
+
 ## ✅ Part 1: Installing MongoDB Server
 
 ### Step 1: Download MongoDB
